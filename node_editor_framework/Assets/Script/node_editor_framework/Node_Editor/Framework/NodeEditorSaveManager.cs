@@ -35,10 +35,19 @@ namespace NodeEditorFramework
 			}
 		}
 
-		/// <summary>
-		/// Gets all existing stored saves in the current scene and returns their names
+        /// <summary>
+		/// Returns whether a sceneSave with the specified name exists in the current scene
 		/// </summary>
-		public static string[] GetSceneSaves ()
+        public static bool HasSceneSave(string saveName)
+        {
+            NodeCanvasSceneSave save = FindSceneSave(saveName);
+            return save != null && save.savedNodeCanvas != null;
+        }
+
+        /// <summary>
+        /// Gets all existing stored saves in the current scene and returns their names
+        /// </summary>
+        public static string[] GetSceneSaves ()
 		{ // Get the saveHolder, find the existing stored saves and return their names
 			FetchSceneSaveHolder ();
 			return sceneSaveHolder.GetComponents<NodeCanvasSceneSave> ().Select (((NodeCanvasSceneSave save) => save.savedNodeCanvas.name)).ToArray ();

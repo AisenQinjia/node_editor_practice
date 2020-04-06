@@ -48,23 +48,23 @@ namespace NodeEditorFramework.Utilities
 			Assembly UnityEngine = Assembly.GetAssembly (typeof (UnityEngine.GUI));
 			Type GUIClipType = UnityEngine.GetType ("UnityEngine.GUIClip", true);
 
-			PropertyInfo topmostRect = GUIClipType.GetProperty ("topmostRect", BindingFlags.Static | BindingFlags.Public);
-			MethodInfo GetTopRect = GUIClipType.GetMethod ("GetTopRect", BindingFlags.Static | BindingFlags.NonPublic);
+			PropertyInfo topmostRect = GUIClipType.GetProperty ("topmostRect", BindingFlags.Static | BindingFlags.Public| BindingFlags.NonPublic);
+            MethodInfo GetTopmostRect = topmostRect != null ? (topmostRect.GetGetMethod(false) ?? topmostRect.GetGetMethod(true)) : null;
+
+            MethodInfo GetTopRect = GUIClipType.GetMethod ("GetTopRect", BindingFlags.Static | BindingFlags.NonPublic);
 			MethodInfo ClipRect = GUIClipType.GetMethod ("Clip", BindingFlags.Static | BindingFlags.Public, Type.DefaultBinder, new Type[] { typeof(Rect) }, new ParameterModifier[] {});
-            Debug.Log("GuiUtility Init111");
-            if (GUIClipType == null || topmostRect == null || GetTopRect == null || ClipRect == null) 
-			{
-				Debug.LogWarning ("GUIScaleUtility cannot run on this system! Compability mode enabled. For you that means you're not able to use the Node Editor inside more than one group:( Please PM me (Seneral @UnityForums) so I can figure out what causes this! Thanks!");
+            if (GUIClipType == null || topmostRect == null || GetTopRect == null || ClipRect == null)
+            { 
+                Debug.LogWarning ("GUIScaleUtility cannot run on this system! Compability mode enabled. For you that means you're not able to use the Node Editor inside more than one group:( Please PM me (Seneral @UnityForums) so I can figure out what causes this! Thanks!");
 				Debug.LogWarning ((GUIClipType == null? "GUIClipType is Null, " : "") + (topmostRect == null? "topmostRect is Null, " : "") + (GetTopRect == null? "GetTopRect is Null, " : "") + (ClipRect == null? "ClipRect is Null, " : ""));
 				compabilityMode = true;
 				initiated = true;
 				return;
 			}
-            Debug.Log("GuiUtility Init222");
 
             // Create simple acessor delegates
             GetTopRectDelegate = (Func<Rect>)Delegate.CreateDelegate (typeof(Func<Rect>), GetTopRect);
-			topmostRectDelegate = (Func<Rect>)Delegate.CreateDelegate (typeof(Func<Rect>), topmostRect.GetGetMethod ());
+			topmostRectDelegate = (Func<Rect>)Delegate.CreateDelegate (typeof(Func<Rect>), GetTopmostRect);
 
 			if (GetTopRectDelegate == null || topmostRectDelegate == null)
 			{
@@ -74,13 +74,11 @@ namespace NodeEditorFramework.Utilities
 				initiated = true;
 				return;
 			}
-            Debug.Log("GuiUtility Init333");
 
             // As we can call Begin/Ends inside another, we need to save their states hierarchial in Lists (not Stack, as we need to iterate over them!):
             currentRectStack = new List<Rect> ();
 			rectStackGroups = new List<List<Rect>> ();
 			GUIMatrices = new List<Matrix4x4> ();
-            Debug.Log("list new!");
 			adjustedGUILayout = new List<bool> ();
 
 			// Sometimes, strange errors pop up (related to Mac?), which we try to catch and enable a compability Mode no supporting zooming in groups

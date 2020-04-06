@@ -182,8 +182,17 @@ namespace NodeEditorFramework
 
 		private void CheckCurrentCache () 
 		{
-			if (!nodeCanvas.livesInScene && UnityEditor.AssetDatabase.GetAssetPath (nodeCanvas) != lastSessionPath)
-				throw new UnityException ("Cache system error: Current Canvas is not saved as the temporary cache!");
+            if (!useCache)
+                return;
+            if (nodeCanvas.livesInScene)
+            {
+                if (!NodeEditorSaveManager.HasSceneSave("lastSession"))
+                    SaveCache();
+            }
+            else if (UnityEditor.AssetDatabase.LoadAssetAtPath<NodeCanvas>(lastSessionPath) == null)
+                SaveCache();
+    //        if (!nodeCanvas.livesInScene && UnityEditor.AssetDatabase.GetAssetPath (nodeCanvas) != lastSessionPath)
+				//throw new UnityException ("Cache system error: Current Canvas is not saved as the temporary cache!");
 		}
 
 		private void DeleteCache () 

@@ -17,7 +17,7 @@ namespace NodeEditorFramework
 	/// </summary>
 	public static class NodeEditor 
 	{
-		public static string editorPath = "Assets/Plugins/Node_Editor/";
+		public static string editorPath = "Assets/Script/Node_Editor_Framework/Node_Editor/";
 
 		// The NodeCanvas which represents the currently drawn Node Canvas; globally accessed
 		public static NodeCanvas curNodeCanvas;
@@ -46,7 +46,6 @@ namespace NodeEditorFramework
 					setupBaseFramework ();
 				if (GUIFunction && !initiatedGUI)
                 {
-                    Debug.Log("check gui");
                     setupGUI();
                 }
 					

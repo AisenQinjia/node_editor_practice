@@ -62,7 +62,6 @@ namespace NodeEditorFramework.Standard
 
 		private void OnEnable()
 		{
-            //Debug.Log("OnEnabale");
 			_editor = this;
 			NodeEditor.checkInit(false);
 
@@ -78,7 +77,7 @@ namespace NodeEditorFramework.Standard
 			SceneView.onSceneGUIDelegate -= OnSceneGUI;
 			SceneView.onSceneGUIDelegate += OnSceneGUI;
 
-			// Setup Cache
+            // Setup Cache
 			canvasCache = new NodeEditorUserCache(Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject (this))));
 			canvasCache.SetupCacheEvents();
 		}
@@ -120,10 +119,7 @@ namespace NodeEditorFramework.Standard
 				canvasCache.editorState.selectedNode.OnSceneGUI();
             SceneView.lastActiveSceneView.Repaint();
         }
-        //private void OnFocus()
-        //{
-        //    Debug.Log("i am in focus!");
-        //}
+        
         private void OnGUI()
 		{            
 			// Initiation
