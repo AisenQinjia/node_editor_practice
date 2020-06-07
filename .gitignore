@@ -7,6 +7,9 @@ build/
 *.iml
 local.properties
 .vscode/
+
+node_editor_framework/Temp
+
 *.pyc
 __pycache__
 TpfTool/work/
