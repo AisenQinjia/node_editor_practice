@@ -9,6 +9,7 @@ local.properties
 .vscode/
 
 node_editor_framework/Temp
+.vs/
 
 *.pyc
 __pycache__
