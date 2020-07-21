@@ -1,8 +1,11 @@
 *.a
+*.o
+*~
 .svn/
 .idea/
 .gradle/
 build/
+.Library/
 .externalNativeBuild/
 *.iml
 local.properties
@@ -13,10 +16,4 @@ node_editor_framework/Temp
 
 *.pyc
 __pycache__
-TpfTool/work/
-TpfTool/log/
-TpfTool/output/
-.DS_Store
-TpfTool/app/**/*.apk
-TpfToolExtra/app/**/*.apk
-TpfUnityDemo/Builds/
+.DS_Stor
